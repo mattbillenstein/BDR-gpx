@@ -13,3 +13,4 @@
 - Text description/comment cleanup - thousands of newlines in some files
 - Remove duplicate points that are adjacent to within ~1.1m resolution
 - Others?
+  - Perhaps remove connectors from actual route files?

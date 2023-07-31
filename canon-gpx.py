@@ -15,6 +15,15 @@ latlondigits = 5
 latlonfmt = '%.' + str(latlondigits) + 'f'
 latlonptfmt = latlonfmt + ',' + latlonfmt
 
+hexcolor = {
+    'Blue': '1E90FF',
+    'DarkBlue': '0000FF',
+    'Red': 'FF0000',
+    'Green': '32CD32',
+    'DarkGreen': '008000',
+    'Magenta': 'FF00FF',
+}
+
 with open('elevation-api.key') as f:
     GOOGLE_MAPS_KEY = f.read().strip()
 
@@ -75,7 +84,8 @@ def main(args):
             for k in ('@lat', '@lon'):
                 wpt[k] = latlonfmt % (float(wpt[k]))
 
-            # replace long runs of newlines - NE/MABDR has thousands of these...
+            # replace long runs of newlines - NE/MABDR has thousands of
+            # these...
             for k in ('name', 'cmt', 'desc'):
                 if wpt.get(k):
                     s = wpt[k]
@@ -83,13 +93,72 @@ def main(args):
                         s = s.replace('\n\n', '\n')
                     wpt[k] = s
 
+        i = 0
         for trk in getlist(gpx, 'trk'):
+            # FIXME - gpxx extensions and so forth?
+
+            # fixup name
+            s = trk['name']
+            if s.split()[0].lower() in ('alt', 'ext'):
+                # make section come first, then alt/ext
+                L = s.split()
+                L[0], L[1] = L[1], L[0]
+                s = ' '.join(L)
+                trk['name'] = s
+
+            # assign color - alternating blue/darkblue for regular route, green
+            # easy, red hard, magenta alternate
+            s = ' ' + trk['name'].lower() + ' '
+            if s.startswith(' to '):
+                color = 'Magenta'
+            elif ' easy ' in s:
+                color = 'Green'
+            elif ' easier ' in s:
+                color = 'Green'
+            elif ' bypass ' in s:
+                color = 'DarkGreen'
+            elif ' hard' in s:
+                color = 'Red'
+            elif ' expert ' in s:
+                color = 'Red'
+            elif ' alt' in s:
+                color = 'Magenta'
+            elif ' ext ' in s:
+                color = 'Magenta'
+            elif ' tbd' in s:
+                color = 'Magenta'
+            elif s.startswith(' gas '):
+                color = 'Magenta'
+            elif ' connector ' in s:
+                color = 'Magenta'
+            else:
+                if i % 2 == 0:
+                    color = 'Blue'
+                else:
+                    color = 'DarkBlue'
+                i += 1
+
+            print(f'{color:10s} -- {trk["name"]}')
+            # Garmin
+            trk['extensions']['gpxx:TrackExtension']['gpxx:DisplayColor'] = color
+
+            # Gaia
+            trk['extensions']['line'] = {
+                '@xmlns': 'http://www.topografix.com/GPX/gpx_style/0/2',
+                'color': hexcolor[color],
+            }
+
             for trkseg in getlist(trk, 'trkseg'):
                 trkpts = []
                 last = None
                 for trkpt in getlist(trkseg, 'trkpt'):
                     for k in ('@lat', '@lon'):
                         trkpt[k] = latlonfmt % (round(float(trkpt[k]), latlondigits))
+
+                    # remove time, it's not consistently present...
+                    for k in ('time',):
+                        if k in trkpt:
+                            trkpt.pop(k, None)
 
                     # filter out duplicate points
                     pt = (trkpt['@lat'], trkpt['@lon'])
@@ -100,6 +169,10 @@ def main(args):
                 if trkpts:
                     trkseg['trkpt'] = trkpts
 
+                    # FIXME, just filling in missing elevations atm, seems to
+                    # line up pretty well with existing elevation data, but
+                    # perhaps we should just replace all the elevations with
+                    # google data?
                     missing = []
                     for trkpt in trkpts:
                         ele = trkpt.get('ele') or '0'

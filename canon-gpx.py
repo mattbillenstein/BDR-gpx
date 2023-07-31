@@ -178,6 +178,8 @@ def main(args):
                         ele = trkpt.get('ele') or '0'
                         if int(float(ele)) == 0:
                             missing.append((trkpt['@lat'], trkpt['@lon']))
+                        else:
+                            trkpt['ele'] = str(round(float(ele), 2))
 
                     elevations = get_elevations(missing)
                     for trkpt in trkpts:
@@ -186,7 +188,7 @@ def main(args):
                             trkpt['ele'] = elevations[pt]
 
         with open(f'dist/{basename}', 'w') as f:
-            f.write(xmltodict.unparse(doc, pretty=True))
+            f.write(xmltodict.unparse(doc, pretty=True, indent='  '))
 
     with open('elevation-cache.json', 'w') as f:
         f.write(json.dumps(_elevation_cache, indent=2))

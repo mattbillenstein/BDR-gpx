@@ -10,7 +10,9 @@
 - Add missing elevation data using Google Maps Elevation API
 - Remove time elements from trkpt
   - This data is not consistently there, messes up time display in Gaia
+  - Perhaps we can infer from garmin device sample rate the actual travel time?
 - Text description/comment cleanup - thousands of newlines in some files
 - Remove duplicate points that are adjacent to within ~1.1m resolution
 - Others?
   - Perhaps remove connectors from actual route files?
+  - Consistent track naming?

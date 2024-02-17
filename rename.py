@@ -81,6 +81,13 @@ def main(argv):
             if dt > date:
                 date = dt
             s = f'PABDRX-Wilds-{date}.gpx'
+        elif mobj := re.match('^CABDR-([NS])-(' + '|'.join(months) + ')(20[123][0-9]).*\.gpx$', fname):
+            ns, month, year = mobj.groups()
+            month = months[month]
+            dt = f'{year}-{month}-01'
+            if dt > date:
+                date = dt
+            s = f'CABDR-{ns}-{date}.gpx'
         elif mobj := re.match('^([A-Z]{2}BDR)-(' + '|'.join(months) + ')(20[123][0-9]).*\.gpx$', fname):
             s, month, year = mobj.groups()
             month = months[month]

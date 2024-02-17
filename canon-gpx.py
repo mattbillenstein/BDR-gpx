@@ -121,7 +121,7 @@ def main(args):
                 color = 'Red'
             elif ' expert ' in s:
                 color = 'Red'
-            elif ' alt' in s:
+            elif ' alt ' in s:
                 color = 'Magenta'
             elif ' ext ' in s:
                 color = 'Magenta'

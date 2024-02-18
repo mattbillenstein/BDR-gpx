@@ -8,11 +8,12 @@
   - Green for easy/bypass
   - Magenta for connectors / alternates
 - Add missing elevation data using Google Maps Elevation API
+- Remove duplicate points that are adjacent to within ~1.1m resolution
+  - Reduces file sizes CABDR-N 7.8M -> 4.7M
 - Remove time elements from trkpt
   - This data is not consistently there, messes up time display in Gaia
   - Perhaps we can infer from garmin device sample rate the actual travel time?
 - Text description/comment cleanup - thousands of newlines in some files
-- Remove duplicate points that are adjacent to within ~1.1m resolution
 - Others?
   - Perhaps remove connectors from actual route files?
   - Consistent track naming?

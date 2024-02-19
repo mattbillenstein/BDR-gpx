@@ -73,6 +73,8 @@ def main(args):
         os.makedirs('dist')
 
     for fname in args:
+        print()
+        print(fname)
         basename = os.path.split(fname)[1]
 
         with open(fname, 'rb') as f:

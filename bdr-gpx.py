@@ -31,11 +31,13 @@ hexcolor = {
     'Magenta': 'FF00FF',
 }
 
-with open('elevation-api.key') as f:
+mei = getattr(sys, '_MEIPASS', '.')
+
+with open(os.path.join(mei, 'elevation-api.key')) as f:
     GOOGLE_MAPS_KEY = f.read().strip()
 
 try:
-    with open('elevation-cache.json') as f:
+    with open('output/elevation-cache.json') as f:
         _elevation_cache = json.loads(f.read())
 except FileNotFoundError:
     _elevation_cache = {}
@@ -76,8 +78,8 @@ def getlist(elem, key):
     return L
 
 def main(args):
-    if not os.path.isdir('dist'):
-        os.makedirs('dist')
+    if not os.path.isdir('output'):
+        os.makedirs('output')
 
     for fname in args:
         print()
@@ -196,10 +198,10 @@ def main(args):
                         if pt in elevations:
                             trkpt['ele'] = elevations[pt]
 
-        with open(f'dist/{basename}', 'w') as f:
+        with open(f'output/{basename}', 'w') as f:
             f.write(xmltodict.unparse(doc, pretty=True, indent='  '))
 
-    with open('elevation-cache.json', 'w') as f:
+    with open('output/elevation-cache.json', 'w') as f:
         f.write(json.dumps(_elevation_cache, indent=2))
 
 if __name__ == '__main__':

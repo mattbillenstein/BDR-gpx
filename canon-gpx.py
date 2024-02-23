@@ -15,6 +15,13 @@ latlondigits = 5
 latlonfmt = '%.' + str(latlondigits) + 'f'
 latlonptfmt = latlonfmt + ',' + latlonfmt
 
+colors = {
+    'even': 'Blue',    # 1 is the 0'th track...
+    'odd': 'Magenta',
+    'hard': 'Red',
+    'alt': 'Green',
+}
+
 hexcolor = {
     'Blue': '1E90FF',
     'DarkBlue': '0000FF',
@@ -112,32 +119,32 @@ def main(args):
             # easy, red hard, magenta alternate
             s = ' ' + trk['name'].lower() + ' '
             if s.startswith(' to '):
-                color = 'Magenta'
+                color = colors['alt']
             elif ' easy ' in s:
-                color = 'Green'
+                color = colors['alt']
             elif ' easier ' in s:
-                color = 'Green'
+                color = colors['alt']
             elif ' bypass ' in s:
-                color = 'DarkGreen'
+                color = colors['alt']
             elif ' hard' in s:
-                color = 'Red'
+                color = colors['hard']
             elif ' expert ' in s:
-                color = 'Red'
+                color = colors['hard']
             elif ' alt ' in s:
-                color = 'Magenta'
+                color = colors['alt']
             elif ' ext ' in s:
-                color = 'Magenta'
+                color = colors['alt']
             elif ' tbd' in s:
-                color = 'Magenta'
+                color = colors['alt']
             elif s.startswith(' gas '):
-                color = 'Magenta'
+                color = colors['alt']
             elif ' connector ' in s:
-                color = 'Magenta'
+                color = colors['alt']
             else:
                 if i % 2 == 0:
-                    color = 'Blue'
+                    color = colors['even']
                 else:
-                    color = 'DarkBlue'
+                    color = colors['odd']
                 i += 1
 
             print(f'{color:10s} -- {trk["name"]}')

@@ -17,17 +17,17 @@ latlonptfmt = latlonfmt + ',' + latlonfmt
 
 colors = {
     'even': 'Blue',    # 1 is the 0'th track...
-    'odd': 'Magenta',
+    'odd': 'DarkBlue',
     'hard': 'Red',
     'alt': 'Green',
 }
 
 hexcolor = {
-    'Blue': '1E90FF',
-    'DarkBlue': '0000FF',
-    'Red': 'FF0000',
-    'Green': '32CD32',
-    'DarkGreen': '008000',
+    'Blue': '3F46F5',
+    'DarkBlue': '00045C',
+    'Red': 'E93223',
+    'Green': '00C000',
+    'DarkGreen': '007000',
     'Magenta': 'FF00FF',
 }
 
@@ -109,38 +109,24 @@ def main(args):
             # FIXME - gpxx extensions and so forth?
 
             # fixup name
-            s = trk['name']
-            if s.split()[0].lower() in ('alt', 'ext'):
-                # make section come first, then alt/ext
-                L = s.split()
-                L[0], L[1] = L[1], L[0]
-                s = ' '.join(L)
-                trk['name'] = s
+#            s = trk['name']
+#            if s.split()[0].lower() in ('alt', 'ext'):
+#                # make section come first, then alt/ext
+#                L = s.split()
+#                L[0], L[1] = L[1], L[0]
+#                s = ' '.join(L)
+#                trk['name'] = s
 
             # assign color - alternating blue/darkblue for regular route, green
             # easy, red hard, magenta alternate
             s = ' ' + trk['name'].lower() + ' '
-            if s.startswith(' to '):
-                color = colors['alt']
-            elif ' easy ' in s:
-                color = colors['alt']
-            elif ' easier ' in s:
-                color = colors['alt']
-            elif ' bypass ' in s:
-                color = colors['alt']
-            elif ' hard' in s:
+            if ' harder ' in s:
                 color = colors['hard']
             elif ' expert ' in s:
                 color = colors['hard']
             elif ' alt ' in s:
                 color = colors['alt']
             elif ' ext ' in s:
-                color = colors['alt']
-            elif ' tbd' in s:
-                color = colors['alt']
-            elif s.startswith(' gas '):
-                color = colors['alt']
-            elif ' connector ' in s:
                 color = colors['alt']
             else:
                 if i % 2 == 0:

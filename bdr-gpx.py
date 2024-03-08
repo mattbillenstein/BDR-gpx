@@ -120,13 +120,18 @@ def main(args):
             # assign color - alternating blue/darkblue for regular route, green
             # easy, red hard, magenta alternate
             s = ' ' + trk['name'].lower() + ' '
-            if ' harder ' in s:
+            if 'BlackHills' in fname and 'BDRX3 - Hill City' in trk['name']:
+                # not same as 1
+                color = 'Magenta'
+            elif ' harder ' in s:
                 color = colors['hard']
             elif ' expert ' in s:
                 color = colors['hard']
             elif ' alt ' in s:
                 color = colors['alt']
             elif ' ext ' in s:
+                color = colors['alt']
+            elif ' bypass ' in s:
                 color = colors['alt']
             else:
                 if i % 2 == 0:

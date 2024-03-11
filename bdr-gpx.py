@@ -20,6 +20,7 @@ colors = {
     'odd': 'DarkBlue',
     'hard': 'Red',
     'alt': 'Green',
+    'bypass': 'Yellow',
 }
 
 hexcolor = {
@@ -29,6 +30,7 @@ hexcolor = {
     'Green': '00C000',
     'DarkGreen': '007000',
     'Magenta': 'FF00FF',
+    'Yellow': 'FFEF00',
 }
 
 mei = getattr(sys, '_MEIPASS', '.')
@@ -123,6 +125,8 @@ def main(args):
             if 'BlackHills' in fname and 'BDRX3 - Hill City' in trk['name']:
                 # not same as 1
                 color = 'Magenta'
+            elif ' temp bypass ' in s:
+                color = colors['bypass']
             elif ' harder ' in s:
                 color = colors['hard']
             elif ' expert ' in s:
@@ -130,8 +134,6 @@ def main(args):
             elif ' alt ' in s:
                 color = colors['alt']
             elif ' ext ' in s:
-                color = colors['alt']
-            elif ' bypass ' in s:
                 color = colors['alt']
             else:
                 if i % 2 == 0:

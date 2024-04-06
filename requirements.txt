@@ -6,6 +6,8 @@
 #
 altgraph==0.17.4
     # via pyinstaller
+bottle==0.12.25
+    # via -r requirements.in
 build==1.0.3
     # via pip-tools
 certifi==2024.2.2

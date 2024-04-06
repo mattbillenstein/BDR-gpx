@@ -1,0 +1,14 @@
+[Unit]
+Description=bdr-gpx
+Documentation=
+
+[Service]
+Type=simple
+User=matt
+Group=matt
+Environment=
+ExecStartPre=
+ExecStart=/bin/bash -c 'source /home/matt/BDR-gpx/.venv/bin/activate; cd /home/matt/BDR-gpx; ./app.py &>> bdr-gpx.log'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BDR GPX Processor</title>
+  <link href="https://vazor.com/css/sakura.css" rel="stylesheet" media="screen">
+</head>
+
+<body>
+  <h1>BDR GPX Processor</h1>
+  <form action="/bdr" method="POST" enctype="multipart/form-data">
+    Select a GPX file: <input type="file" name="upload" /><br>
+    <input type="submit" value="Submit" /><br>
+  </form>
+
+  <br>
+% if filename:
+Download: <a href="/bdr/download/{{filename}}">{{filename}}</a><br>
+% end
+% if logs:
+Log: <a href="/bdr/download/{{logpath}}">{{logpath}}</a><br>
+<pre>
+{{'\n'.join(logs)}}
+</pre>
+% end
+
+</body>
+</html>

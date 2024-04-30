@@ -29,6 +29,8 @@ hexcolor = {
     'DarkGreen': '007000',
     'Magenta': 'FF00FF',
     'Yellow': 'FFEF00',
+    'Cyan': '00FFFF',
+    'Black': '000000',
 }
 
 mei = getattr(sys, '_MEIPASS', '.')
@@ -77,7 +79,7 @@ def getlist(elem, key):
         L = [L]
     return L
 
-def process(fin, fout, log=print):
+def process(fin, fout, log=print, preserve_colors=False):
     with open(fin, 'rb') as f:
         doc = xmltodict.parse(f)
 
@@ -109,28 +111,31 @@ def process(fin, fout, log=print):
 #                s = ' '.join(L)
 #                trk['name'] = s
 
-        # assign color - alternating blue/darkblue for regular route, green
-        # easy, red hard, magenta alternate
-        s = ' ' + trk['name'].lower() + ' '
-        if 'BlackHills' in fin and 'BDRX3 - Hill City' in trk['name']:
-            # not same as 1
-            color = 'Magenta'
-        elif ' temp bypass ' in s:
-            color = colors['bypass']
-        elif ' harder ' in s:
-            color = colors['hard']
-        elif ' expert ' in s:
-            color = colors['hard']
-        elif ' alt ' in s:
-            color = colors['alt']
-        elif ' ext ' in s:
-            color = colors['alt']
+        if preserve_colors:
+            color = trk['extensions']['gpxx:TrackExtension']['gpxx:DisplayColor']
         else:
-            if i % 2 == 0:
-                color = colors['even']
+            # assign color - alternating blue/darkblue for regular route, green
+            # easy, red hard, magenta alternate
+            s = ' ' + trk['name'].lower() + ' '
+            if 'BlackHills' in fin and 'BDRX3 - Hill City' in trk['name']:
+                # not same as 1
+                color = 'Magenta'
+            elif ' temp bypass ' in s:
+                color = colors['bypass']
+            elif ' harder ' in s:
+                color = colors['hard']
+            elif ' expert ' in s:
+                color = colors['hard']
+            elif ' alt ' in s:
+                color = colors['alt']
+            elif ' ext ' in s:
+                color = colors['alt']
             else:
-                color = colors['odd']
-            i += 1
+                if i % 2 == 0:
+                    color = colors['even']
+                else:
+                    color = colors['odd']
+                i += 1
 
         log(f'{color:10s} -- {trk["name"]}')
 

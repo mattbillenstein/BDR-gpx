@@ -22,11 +22,13 @@ def index():
         'logs': [],
         'logpath': None,
         'filename': None,
+        'preserve_colors': False,
     }
 
     log = partial(_log, logs=ctx['logs'])
 
     if request.method == 'POST':
+        ctx['preserve_colors'] = bool(int(request.forms.get('preserve_colors', 0)))
         upload = request.files.get('upload')
         if upload and upload.filename != 'empty':
             name, ext = os.path.splitext(upload.filename)
@@ -41,7 +43,7 @@ def index():
                 logout = f'{OUTPUT}/{logpath}'
                 upload.save(fin)
                 try:
-                    lib.process(fin, fout, log)
+                    lib.process(fin, fout, log, ctx['preserve_colors'])
                     ctx['filename'] = fpath
                 except Exception as e:
                     exc = traceback.format_exc()

@@ -11,7 +11,13 @@
 <body>
   <h1>BDR GPX Processor</h1>
   <form action="/bdr" method="POST" enctype="multipart/form-data">
-    Select a GPX file: <input type="file" name="upload" /><br>
+    <label>Select a GPX file:
+      <input type="file" name="upload" />
+    </label>
+    <label>Preserve Garmin Colors:
+      <input type="hidden" name="preserve_colors" value="0">
+      <input type="checkbox" name="preserve_colors" value="1" {{'checked' if preserve_colors else ''}} />
+    </label>
     <input type="submit" value="Submit" /><br>
   </form>
 

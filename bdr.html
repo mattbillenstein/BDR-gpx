@@ -26,7 +26,10 @@
 Download: <a href="/bdr/download/{{filename}}">{{filename}}</a><br>
 % end
 % if logs:
-Log: <a href="/bdr/download/{{logpath}}">{{logpath}}</a><br>
+Log:
+%   if logpath:
+<a href="/bdr/download/{{logpath}}">{{logpath}}</a><br>
+%   end
 <pre>
 {{'\n'.join(logs)}}
 </pre>

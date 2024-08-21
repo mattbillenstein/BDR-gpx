@@ -26,11 +26,13 @@ hexcolor = {
     'DarkBlue': '00045C',
     'Red': 'E93223',
     'Green': '00C000',
-    'DarkGreen': '007000',
+    'DarkGreen': '285E18',
     'Magenta': 'FF00FF',
     'Yellow': 'FFEF00',
     'Cyan': '00FFFF',
     'Black': '000000',
+    'DarkMagenta': '570D5D',
+    'DarkCyan': '377E7E',
 }
 
 mei = getattr(sys, '_MEIPASS', '.')

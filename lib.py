@@ -150,6 +150,13 @@ def process(fin, fout, log=print, preserve_colors=False):
             'color': hexcolor[color],
         }
 
+        # OnX
+        trk['extensions']['onx:style'] = 'solid'
+        trk['extensions']['onx:weight'] = '4.0'
+        rgb = hexcolor[color]
+        r, g, b = int(rgb[:2], 16), int(rgb[2:4], 16), int(rgb[4:], 16)
+        trk['extensions']['onx:color'] = f'rgba({r}, {g}, {b}, 1)'
+
         for trkseg in getlist(trk, 'trkseg'):
             trkpts = []
             last = None

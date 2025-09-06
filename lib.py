@@ -196,6 +196,12 @@ def process(fin, fout, log=print, preserve_colors=False):
                     if pt in elevations:
                         trkpt['ele'] = elevations[pt]
 
+    for wpt in getlist(gpx, 'wpt'):
+        wpt['extensions']['onx:color'] = 'rgba(255, 51, 0, 1)'
+        wpt['extensions']['onx:icon'] = 'Location'
+        if 'gas' in wpt.get('name', '').lower():
+            wpt['extensions']['onx:icon'] = 'Fuel'
+
     with open(fout, 'w') as f:
         f.write(xmltodict.unparse(doc, pretty=True, indent='  '))
 

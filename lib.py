@@ -197,10 +197,11 @@ def process(fin, fout, log=print, preserve_colors=False):
                         trkpt['ele'] = elevations[pt]
 
     for wpt in getlist(gpx, 'wpt'):
-        wpt['extensions']['onx:color'] = 'rgba(255, 51, 0, 1)'
+        wpt['extensions']['onx:color'] = 'rgba(0, 0, 0, 1)'
         wpt['extensions']['onx:icon'] = 'Location'
         name = wpt.get('name', '').lower()
         if ('gas' in name and not 'no gas' in name) or ('fuel' in name and not 'no fuel' in name):
+            wpt['extensions']['onx:color'] = 'rgba(255, 51, 0, 1)'
             wpt['extensions']['onx:icon'] = 'Fuel'
 
     with open(fout, 'w') as f:

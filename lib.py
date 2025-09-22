@@ -87,6 +87,9 @@ def process(fin, fout, log=print, preserve_colors=False):
 
     gpx = doc['gpx']
 
+    # add onx ns
+    gpx['@xmlns:onx'] = 'http://www.onxmaps.com'
+
     for wpt in getlist(gpx, 'wpt'):
         for k in ('@lat', '@lon'):
             wpt[k] = latlonfmt % (float(wpt[k]))

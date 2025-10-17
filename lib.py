@@ -71,6 +71,7 @@ def get_elevations(points):
         data = r.json()
         for result in data['results']:
             key = latlonptfmt % canon_point((result['location']['lat'], result['location']['lng']))
+            assert 'elevation' in result, result
             _elevation_cache[key] = '%.2f' % (result['elevation'])
 
     return {canon_point(pt): _elevation_cache[latlonptfmt % canon_point(pt)] for pt in points}
